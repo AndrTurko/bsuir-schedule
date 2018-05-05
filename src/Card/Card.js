@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { Table, Icon, Divider } from "antd";
+import { Table, Spin } from "antd";
 
 const columns = [
   {
     title: "Time",
     dataIndex: "time",
-    key: "time",
-    render: text => <a href="javascript:;">{text}</a>
+    key: "time"
   },
   {
     title: "Subject",
@@ -25,9 +24,6 @@ const columns = [
   }
 ];
 
-
-let i = 0;
-
 class Card extends Component {
   constructor(props) {
     super(props)
@@ -36,7 +32,8 @@ class Card extends Component {
       size: "default",
       showHeader: false,
       title: () => '',
-      data: []
+      data: [],
+      load: false
     }
   }
 
@@ -48,33 +45,38 @@ class Card extends Component {
     fetch('https://students.bsuir.by/api/v1/studentGroup/schedule?studentGroup=620601')
     .then(response => response.json())
     .then(d => {
-      console.log(d)
       this.changeTitle(`Сегодня ${d.todayDate}`)
-      this.setState({
-        data: [...this.state.data,{
+      const data = d.todaySchedules.map((el, i)=>{
+        return {
           key: i,
-          time: d.todaySchedules[i].lessonTime,
-          subject: d.todaySchedules[i].subject,
-          teacher: d.todaySchedules[i].employee[0].fio,
-          room: d.todaySchedules[i].auditory
-        }]
+          time: el.lessonTime,
+          subject: el.subject,
+          teacher: el.employee[0].fio,
+          room: el.auditory
+        }
+      });
+      this.setState({
+        load: true
       })
-      console.log(this.state.data)
+      this.setState({
+        data
+      })
     });
     
   }
 
   render() {
-    const state = this.state;
     return (
-      <Table
+      <div>
+      {this.state.load ? <Table
         {...this.state}
         style={{ 
           maxWidth: "600px"
         }}
         columns={columns}
         dataSource={this.state.data}
-      />
+      /> : <Spin style={{display: 'block', margin: '0 auto'}}/>}
+      </div>
     );
   }
 }
