@@ -1,37 +1,43 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import CardList from './CardList/CardList'
-import Checkbox from 'material-ui/Checkbox';
+import SearchBar from './SearchBar/SearchBar'
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-};
+class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      groupNumber: ''
+    }
 
-function SimpleAppBar(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static" color="primary">
-        <Toolbar>
-          <Typography variant="title" color="inherit">
-            BSUIR Schedule
-          </Typography>
-          <Checkbox />
-        </Toolbar>
-      </AppBar>
-      <CardList />
-    </div>
-  );
+    this.handlerGroupNumber = this.handlerGroupNumber.bind(this)
+  }
+
+  handlerGroupNumber(event) {
+    this.setState({
+      groupNumber: event.target.value
+    });
 }
 
-SimpleAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+  render() {
+    return (
+      <div>
+        {console.log(this.state.groupNumber)}
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <Typography variant="title" color="inherit">
+              BSUIR Schedule
+          </Typography>
+          </Toolbar>
+        </AppBar>
+        <SearchBar disabled={true} handlerGroupNumber={this.handlerGroupNumber} />
+        {this.state.groupNumber.length >= 6 ? <CardList groupNumber={this.state.groupNumber}/> : undefined}
+      </div>
+    );
+  }
+}
 
-export default withStyles(styles)(SimpleAppBar);
+
+export default App;

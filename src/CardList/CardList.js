@@ -14,31 +14,38 @@ class CardList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      load: false
+      load: false,
+      error: true
     };
   }
 
   componentDidMount() {
-    fetch("https://students.bsuir.by/api/v1/studentGroup/schedule?studentGroup=620601")
+    this.setState({
+      error: false
+    })
+    fetch(`https://students.bsuir.by/api/v1/studentGroup/schedule?studentGroup=${this.props.groupNumber}`)
       .then(response => response.json())
       .then(d => {
         console.log(d)
         this.setState({
           data: [...d.schedules],
-          currentWeekNumber: d.currentWeekNumber
-        });
-        this.setState({
+          currentWeekNumber: d.currentWeekNumber,
           load: true
         });
-      });
+      })
+      .catch(()=> {
+        this.setState({
+          error: true
+        });
+    })
   }
 
   render() {
     return (
       <CardListWrapper>
-        {this.state.load ? this.state.data.map((el, i)=>{
-          return <Card key={i} data={el} currentWeekNumber={this.state.currentWeekNumber}/>
-        }): <CircularProgress size={50} />}
+        {this.state.load ? this.state.data.map((el, i) => {
+          return <Card key={i} data={el} currentWeekNumber={this.state.currentWeekNumber} />
+        }) : this.state.error ? "Группа не найдена" : <CircularProgress size={50} />}
       </CardListWrapper>
     );
   }

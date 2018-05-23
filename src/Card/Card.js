@@ -23,7 +23,6 @@ const Card = ({data, currentWeekNumber}) => (
               <TableRow key={i}>
                 <TableCell>{el.lessonTime}</TableCell>
                 <TableCell>{el.subject}</TableCell>
-                {console.log(el.employee && el.employee[0] && el.employee[0].photoLink ? el.employee[0].photoLink : "no image")}
                 <TableCell><Avatar src={el.employee && el.employee[0] && el.employee[0].photoLink ? el.employee[0].photoLink : undefined}/></TableCell>
               </TableRow>
               : null
