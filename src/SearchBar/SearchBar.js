@@ -18,10 +18,6 @@ const StyledInput = styled(Input)`
 `
 
 class SearchBar extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <SearchBarWrapper>
