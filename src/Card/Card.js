@@ -1,6 +1,7 @@
 import React from 'react';
-import Table, { TableBody, TableCell, TableRow } from 'material-ui/Table';
-import {Paper, Avatar} from 'material-ui';
+import Table, { TableBody, TableCell, TableRow } from '@material-ui/core/Table';
+import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar';
 import styled from 'styled-components';
 
 const CardWrapper = styled.div`

@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "homepage": "https://bsuir-schedule-app.herokuapp.com",
   "dependencies": {
-    "@material-ui/core": "^1.0.0",
+    "@material-ui/core": "^1.2.1",
     "autosuggest-highlight": "^3.1.1",
     "gh-pages": "^1.1.0",
-    "material-ui": "^1.0.0-beta.45",
     "react": "^16.3.2",
     "react-autosuggest": "^9.3.4",
     "react-dom": "^16.3.2",
